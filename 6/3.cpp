@@ -8,19 +8,13 @@ bool find(int set[], int n, int num)
 
 int delete_duplicate(int set[], int n)
 {
-    int result[n] = { };
-    int size = 0;
-
     for (int i = 0; i < n; ++i)
-        if (!find(result, size, set[i]))
+        while (i < n && find(set, i, set[i]))
         {
-            result[size] = set[i];
-            ++size;
+            set[i] = set[n - 1];
+            --n;
         }
-    
-    for (int i = 0; i < size; ++i)
-        set[i] = result[i];
-    return size;
+    return n;
 }
 
 void sort(int set[], int n)
