@@ -4,11 +4,8 @@ using namespace std;
 int sum(bool *begin, bool *end)
 {
     int s = 0;
-    while (begin != end)
-    {
-        s += *begin;
-        ++begin;
-    }
+    for (bool *p = begin; p != end; ++p)
+        s += *p;
     return s;
 }
 

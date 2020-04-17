@@ -5,11 +5,8 @@ using namespace std;
 int stoi(const char *begin, const char *end)
 {
     int i = 0;
-    while (begin != end)
-    {
-        i = i * 10 + *begin - '0';
-        ++begin;
-    }
+    for (const char *p = begin; p != end; ++p)
+        i = i * 10 + *p - '0';
     return i;
 }
 

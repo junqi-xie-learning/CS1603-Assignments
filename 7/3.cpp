@@ -2,11 +2,8 @@ const char *strrchr(const char *str, int ch)
 {
     char c = static_cast<char>(ch);
     const char *ptr = nullptr;
-    while (*str != '\0')
-    {
-        if (*str == c)
-            ptr = str;
-        ++str;
-    }
+    for (const char *p = str; *p != '\0'; ++p)
+        if (*p == c)
+            ptr = p;
     return ptr;
 }
