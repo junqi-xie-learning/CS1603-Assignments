@@ -1,13 +1,44 @@
-void force(long long int stream[], int size)
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+void convert(char dst[], char src[], int n)
 {
-    for (int i = 0; i < size - 1; ++i)
-        stream[i] = stream[i + 1];
-    stream[size - 1] = stream[size - 2] + stream[size - 3];
+    if (n == 1)
+    {
+        strcpy(dst, src);
+        return;
+    }
+
+    int cycle_len = 2 * n - 2;
+    int size = strlen(src);
+    int index = 0;
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j + i < size; j += cycle_len)
+        {
+            dst[index] = src[j + i];
+            ++index;
+
+            if (i != 0 && i != n - 1 && j + cycle_len - i < size)
+            {
+                dst[index] = src[j + cycle_len - i];
+                ++index;
+            }
+        }
+    dst[index] = '\0';
 }
 
-long long int fib()
+int main()
 {
-    static long long int stream[3] = { 0, 0, 1 };
-    force(stream, 3);
-    return stream[1];
+    int n = 0;
+    char src[31] = "";
+    cin >> n;
+    cin.get();
+    cin.getline(src, 31);
+
+    char dst[31] = "";
+    convert(dst, src, n);
+    cout << dst;
+    return 0;
 }

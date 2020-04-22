@@ -1,11 +1,13 @@
-long long quickPow(int n, int k)
+void force(long long int stream[], int size)
 {
-    if (k == 0)
-        return 1;
-    
-    long long int result = quickPow(n, k / 2);
-    if (k % 2 == 0)
-        return result * result;
-    else
-        return n * result * result;
+    for (int i = 0; i < size - 1; ++i)
+        stream[i] = stream[i + 1];
+    stream[size - 1] = stream[size - 2] + stream[size - 3];
+}
+
+long long int fib()
+{
+    static long long int stream[3] = { 0, 0, 1 };
+    force(stream, 3);
+    return stream[1];
 }

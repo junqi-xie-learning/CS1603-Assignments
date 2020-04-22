@@ -1,102 +1,57 @@
 #include <iostream>
 using namespace std;
 
-constexpr int moves[8][2] = { { -1, 2 }, { -1, -2 }, { -2, 1 }, { -2, -1 },
-    { 1, 2 }, { 1, -2 }, { 2, 1 }, { 2, -1 } };
-constexpr int impossible = 11; // Impossible token
-
-bool is_valid(int chess_board[10][10], int n, int x, int y)
+void merge(int A[], int low, int mid, int high)
 {
-    return x >= 0 && x < n && y >= 0 && y < n && !chess_board[x][y];
-}
+    int first = low, second = mid + 1;
+    int temp[high - low + 1] = { };
 
-int count_next(int chess_board[10][10], int n, int x, int y)
-{
-    int count = 0;
-    for (int i = 0; i < 8; ++i)
+    int size = 0;
+    while (first <= mid && second <= high)
     {
-        int new_x = x + moves[i][0];
-        int new_y = y + moves[i][1];
-        if (is_valid(chess_board, n, new_x, new_y))
-            ++count;
-    }
-    return count;
-}
-
-int min(int array[], int n)
-{
-    int min_num = impossible;
-    for (int i = 0; i < n; ++i)
-        if (array[i] < min_num)
-            min_num = array[i];
-    return min_num;
-}
-
-bool is_solution(int chess_board[10][10], int n)
-{
-    for (int i = 0; i < n; ++i)
-        for (int j = 0; j < n; ++j)
-            if (chess_board[i][j] == 0)
-                return false;
-    return true;
-}
-
-bool go(int chess_board[10][10], int n, int x, int y, int current_step)
-{
-    if (is_solution(chess_board, n))
-        return true;
-
-    int steps[8] = { };
-    for (int i = 0; i < 8; ++i)
-    {
-        int new_x = x + moves[i][0];
-        int new_y = y + moves[i][1];
-        if (is_valid(chess_board, n, new_x, new_y))
-            steps[i] = count_next(chess_board, n, new_x, new_y);
-        else
-            steps[i] = impossible;
-    }
-
-    while (min(steps, 8) != impossible)
-    {
-        int min_step = min(steps, 8);
-        for (int i = 0; i < 8; ++i)
+        if (A[first] <= A[second])
         {
-            if (steps[i] == min_step)
-            {
-                int new_x = x + moves[i][0];
-                int new_y = y + moves[i][1];
-
-                chess_board[new_x][new_y] = current_step + 1;
-                if (go(chess_board, n, new_x, new_y, current_step + 1))
-                    return true;
-                else
-                    chess_board[new_x][new_y] = 0;
-                steps[i] = impossible;
-            }
+            temp[size] = A[first];
+            ++first;
         }
+        else
+        {
+            temp[size] = A[second];
+            ++second;
+        }
+        ++size;
     }
-    return false;
+    
+    // If the tail of the first half is larger, copy it to the end of the original array.
+    for (int i = 0; mid - i >= first; ++i)
+        A[high - i] = A[mid - i];
+    for (int i = 0; i < size; ++i)
+        A[low + i] = temp[i];
+}
+
+void sort(int A[], int low, int high)
+{
+    if (high - low > 0)
+    {
+        int mid = (low + high) / 2;
+        sort(A, low, mid);
+        sort(A, mid + 1, high);
+        merge(A, low, mid, high);
+    }
 }
 
 int main()
 {
     int n = 0; 
     cin >> n;
-    int chess_board[10][10] = { };
+    int A[n] = { };
+    for (int i = 0; i < n; ++i)
+        cin >> A[i];
 
-    int x = 0, y = 0;
-    cin >> x >> y;
-    
-    chess_board[x - 1][y - 1] = 1;
-    if (go(chess_board, n, x - 1, y - 1, 1))
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-                cout << chess_board[i][j] << ' ';
-            cout << endl;
-        }
-    else
-        cout << "None";
+    sort(A, 0, n - 1);
+
+    for (int i = 0; i < n - 1; ++i)
+        cout << A[i] << ' ';
+    cout << A[n - 1];
     return 0;
 }
