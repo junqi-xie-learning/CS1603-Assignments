@@ -26,10 +26,9 @@ void show(const char *s, char *res)
         ++j;
     }
     while (res[size] == '0')
-    {
-        res[size] = '\0';
         --size;
-    }
+    ++size;
+    res[size] = '\0';
 }
 
 int index(const char *p, char ch)

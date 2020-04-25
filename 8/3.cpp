@@ -1,7 +1,7 @@
 struct Node
 {
-    int order, coeff; // 次数 和 系数
-    Node *nxt;        // 指向后一项的指针
+    int order, coeff;
+    Node *nxt;
 };
 
 Node *adjoin_term(Node *head, Node *rest)
@@ -9,9 +9,11 @@ Node *adjoin_term(Node *head, Node *rest)
     if (head->coeff == 0)
         return rest;
 
-    head->nxt = nullptr;
-    if (rest->coeff == 0)
-        delete rest;
+    if (rest && rest->coeff == 0)
+    {
+        delete rest; // Node{ 0, 0 }
+        head->nxt = nullptr;
+    }
     else
         head->nxt = rest;
     return head;
@@ -22,9 +24,9 @@ Node *add_poly(Node *a, Node *b)
     if (!a && !b)
         return new Node{ 0, 0 };
     else if (!a)
-        return b;
+        return adjoin_term(b, b->nxt);
     else if (!b)
-        return a;
+        return adjoin_term(a, a->nxt);
 
     if (a->order == b->order)
     {
