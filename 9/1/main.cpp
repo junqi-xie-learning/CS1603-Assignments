@@ -1,7 +1,7 @@
-#include "admin.h"
+#include "management.h"
 
-Student *student_list;
-int student_size = 0;
+// Functions for the specific program
+// Mostly the functions involving input and output
 
 void read_add_student()
 {
@@ -74,7 +74,7 @@ int main()
 {
     int T = 0;
     cin >> T;
-    student_list = new Student[T];
+    create_list(T);
 
     for (int i = 0; i < T; ++i)
     {
@@ -104,4 +104,7 @@ int main()
             break;
         }
     }
+
+    delete_list();
+    return 0;
 }

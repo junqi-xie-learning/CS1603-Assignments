@@ -1,4 +1,4 @@
-#include "admin.h"
+#include "management.h"
 
 int total(const Student &s)
 {
@@ -22,25 +22,6 @@ void output_student(const Student &s)
          << setw(4) << s.chinese
          << setw(4) << s.math
          << setw(4) << s.english << endl;
-}
-
-Student *get_by_id(int id)
-{
-    for (Student *p = student_list; p != student_list + student_size; ++p)
-        if (p->student_id == id)
-            return p;
-    return nullptr;
-}
-
-void add_student(const Student &s)
-{
-    if (get_by_id(s.student_id))
-    {
-        cout << "Duplicate detected." << endl;
-        return;
-    }
-    student_list[student_size] = s;
-    ++student_size;
 }
 
 void sort(int (*comp)(const Student&, const Student&))
