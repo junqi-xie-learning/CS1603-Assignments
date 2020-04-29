@@ -9,13 +9,15 @@ Node *adjoin_term(Node *head, Node *rest)
     if (head->coeff == 0)
         return rest;
 
-    if (rest && rest->coeff == 0)
+    if (!rest)
+        head->nxt = nullptr;
+    else if (rest->coeff == 0)
     {
         delete rest; // Node{ 0, 0 }
         head->nxt = nullptr;
     }
     else
-        head->nxt = rest;
+        head->nxt = adjoin_term(rest, rest->nxt);
     return head;
 }
 
