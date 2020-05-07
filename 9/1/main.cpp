@@ -18,7 +18,7 @@ void modify_student()
     if (!temp)
     {
         cout << "Not found." << endl;
-        cin.ignore('\n');
+        cin.ignore(20, '\n');
         return;
     }
 
