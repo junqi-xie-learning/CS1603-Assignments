@@ -9,5 +9,5 @@ If you found any mistakes in the solutions, please create an issue or contact me
 
 ## Environment Setup
 
-* This repository was tested with Mingw-w64 (x86_64-8.1.0-win32-seh-rt_v6-rev0).
+* This repository was tested with GCC Version 9.3.0 on Ubuntu 20.04.
 * The code in this repository has passed the Online Judge of CS125.
