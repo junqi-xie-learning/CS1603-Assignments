@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cmath>
+#include <iomanip>
 using namespace std;
 
 int stoi(const char *begin, const char *end)
@@ -42,24 +42,6 @@ void add_day(int date[3], int n)
     }
 }
 
-bool print(int i, int e)
-{
-    if (i >= pow(10, e))
-    {
-        cout << "out of limit!";
-        return false;
-    }
-
-    --e;
-    while (i < pow(10, e) && e != 0)
-    {
-        cout << 0;
-        --e;
-    }
-    cout << i;
-    return true;
-}
-
 int main()
 {
     char str[9] = { };
@@ -70,10 +52,14 @@ int main()
     int date[3] = { stoi(str, str + 4), stoi(str + 4, str + 6), stoi(str + 6, str + 8) };
     add_day(date, day);
     
-    if (print(date[0], 4))
+    if (date[0] >= 10000)
+        cout << "out of limit!" << endl;
+    else
     {
-        print(date[1], 2);
-        print(date[2], 2);
+        cout.fill('0');
+        cout << setw(4) << date[0]
+            << setw(2) << date[1]
+            << setw(2) << date[2] << endl;
     }
     return 0;
 }

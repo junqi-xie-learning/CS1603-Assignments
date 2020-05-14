@@ -49,6 +49,7 @@ void output_by_id()
 
 void output_by_name()
 {
+    sort(comp_by_id);
     char name[16] = { };
     cin >> name;
     bool found = false;

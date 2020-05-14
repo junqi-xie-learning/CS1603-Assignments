@@ -35,8 +35,8 @@ void LongLongInt::display() const
 
 LongLongInt LongLongInt::add(LongLongInt b)
 {
-    int new_len = max(strlen(num), strlen(b.num));
     char *ptr1 = num, *ptr2 = b.num;
+    int new_len = max(strlen(ptr1), strlen(ptr2));
     if (new_len != strlen(ptr1))
         swap(ptr1, ptr2);
 
