@@ -11,8 +11,8 @@ private:
     bool is_date(int m, int d, int y) const;
 
 public:
-    Date();
-    Date(int m, int d, int y);
+    Date() :month{ 1 }, day{ 1 }, year{ 1900 } { }
+    Date(int m, int d, int y) :month{ 1 }, day{ 1 }, year{ 1900 } { setDate(m, d, y); }
     void setDate(int m, int d, int y);
 
     int get_month() const { return month; }
@@ -21,7 +21,7 @@ public:
 
     Date &operator+=(int n);
     Date &operator++() { *this += 1; return *this; }
-    Date operator++(int) { Date temp = *this; *this += 1; return temp; }
+    Date operator++(int) { Date temp = *this; ++*this; return temp; }
     bool operator<(const Date& date) const;
 };
 
@@ -48,15 +48,6 @@ bool Date::is_date(int m, int d, int y) const
     else if (days_in_month(m, leapyear(y)) < d) 
         return false;
     return true;
-}
-
-Date::Date()
-    :month{ 1 }, day{ 1 }, year{ 1900 } { }
-
-Date::Date(int m, int d, int y)
-    :month{ 1 }, day{ 1 }, year{ 1900 }
-{
-    setDate(m, d, y);
 }
 
 void Date::setDate(int m, int d, int y)

@@ -8,15 +8,13 @@ class LongLongInt
     friend ostream &operator<<(ostream &os, const LongLongInt &lli);
 private:
     char *num;
-    LongLongInt(char *num_rep);
+    LongLongInt(char *num_rep) :num{ num_rep } { }
 
 public:
     LongLongInt(const char *num);
     LongLongInt(const LongLongInt &other);
+    ~LongLongInt() { delete[] num; }
 };
-
-LongLongInt::LongLongInt(char *num_rep)
-    :num{ num_rep } { }
 
 LongLongInt::LongLongInt(const char *num)
 {
