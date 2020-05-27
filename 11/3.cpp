@@ -55,6 +55,9 @@ MyVect::MyVect(const MyVect &other)
 
 MyVect &MyVect::operator=(const MyVect &other)
 {
+    if (this == &other)
+        return *this;
+    
     delete[] vect;
     n = other.n;
     create_space(other);
