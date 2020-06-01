@@ -11,6 +11,7 @@ private:
 
 public:
     Employee(const char *first, const char *last, const char *ssn);
+    ~Employee() { delete[] first_name; delete[] last_name; delete[] social_security_number; }
     virtual void print() const;
     virtual int earnings() const = 0;
 };
