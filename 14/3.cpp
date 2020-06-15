@@ -11,7 +11,7 @@ private:
     char birth[7];
     char phone[12];
 public:
-    Student(const char *n, const char *b, const char *p);
+    Student(const char *n = "", const char *b = "", const char *p = "");
 
     const char *get_name() const { return name; }
     const char *get_birth() const { return birth; }
@@ -22,18 +22,22 @@ public:
 };
 
 Student::Student(const char *n, const char *b, const char *p)
+    :name{ }, birth{ }, phone{ }
 {
     strcpy(name, n);
     strcpy(birth, b);
     strcpy(phone, p);
 }
 
+istream &operator>>(istream &is, Student &s)
+{
+    is.read(reinterpret_cast<char *>(&s), sizeof(s));
+    return is;
+}
+
 ostream &operator<<(ostream &os, const Student &s)
 {
-    os.fill('\0');
-    os << left << setw(20) << s.get_name()
-        << left << setw(7) << s.get_birth()
-        << left << setw(12) << s.get_phone();
+    os.write(reinterpret_cast<const char *>(&s), sizeof(s));
     return os;
 }
 
@@ -80,14 +84,9 @@ Management::Management(const char *file)
 Student Management::find(long long int student_no)
 {
     find_pos(student_no);
-    char name[20], birth[7], phone[12];
-    ifs.get(name, 20);
-    ifs.seekg(1, ios_base::cur);
-    ifs.get(birth, 7);
-    ifs.seekg(1, ios_base::cur);
-    ifs.get(phone, 12);
-
-    return Student{ name, birth, phone };
+    Student result;
+    ifs >> result;
+    return result;
 }
 
 void Management::replace(long long int student_no, const Student &new_student)
